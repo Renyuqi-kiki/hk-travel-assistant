@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>港慢游 · 把香港，慢慢走一遍</title>
+  <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" type="module"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="港慢游首页"><img src="/static/icon.svg" alt=""><strong>港慢游</strong><span>HONG KONG, SLOWLY</span></a>
+    <span class="status-pill"><i></i>本地资料演示</span>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy"><span class="eyebrow">一座城市，许多种走法</span><h1>把香港，<br>慢慢走一遍。</h1><p>从一杯奶茶到一片海港。<br>查一查资料，排一段属于你的旅程。</p><div class="hero-stats"><span><b id="place-count">21</b> 个精选地点</span><span>每个推荐都有出处</span></div></div>
+      <img class="hero-art" src="/static/harbour.svg" alt="原创插画：香港天际线、山峦与维多利亚港上的小轮">
+      <span class="hero-caption">港岛与九龙之间 / 让旅程留一点空白</span>
+    </section>
+
+    <nav class="tabs" aria-label="功能导航">
+      <button class="tab active" data-view="ask" aria-current="page">问一问 <span>01</span></button>
+      <button class="tab" data-view="plan">排个行程 <span>02</span></button>
+      <button class="tab" data-view="places">地点资料 <span>03</span></button>
+      <button class="tab" data-view="about">运行状态 <span>04</span></button>
+    </nav>
+
+    <section id="view-ask" class="view">
+      <div class="section-heading"><div><span class="eyebrow">先从一个问题开始</span><h2>今天想去哪里？</h2></div><span class="subtle">香港景点 · 港式味道 · 街区散步</span></div>
+      <div class="ask-layout">
+        <div class="panel question-panel">
+          <form id="ask-form">
+            <label class="label" for="question">说说你的想法</label>
+            <textarea id="question" name="question" rows="4" minlength="2" maxlength="500" placeholder="比如：第一次来香港，想看看海港，也想吃点本地美食……" required></textarea>
+            <div class="ask-options"><label>范围 <select id="ask-region"><option>全部</option><option>香港岛</option><option>九龙</option><option>大屿山</option></select></label><label class="check"><input type="checkbox" id="ask-indoor">只看室内地点</label></div>
+            <div class="submit-row"><label class="check model-option"><input type="checkbox" id="use-model" disabled>使用大模型回答 <span id="model-hint">待配置</span></label><button class="primary" type="submit" id="ask-submit">查资料，找灵感 <span>↗</span></button></div>
+          </form>
+          <div class="suggestions"><span>也可以试试</span><button data-question="中环有什么文化景点？">中环文化散步</button><button data-question="下雨天可以去哪些室内场馆？">雨天去哪儿</button><button data-question="深水埗有什么小吃？">找一口港式味道</button></div>
+          <p class="fine-print">当前回答来自本地资料摘录；不会编造实时票价、天气或营业情况。</p>
+        </div>
+        <aside class="side-note"><span class="note-number">有据可查</span><h3>推荐背后，<br>留一条线索。</h3><p>查看官方来源，了解地点为何被选中。把有兴趣的地方加入“必去”，再来安排行程。</p><div class="note-line"></div><p class="subtle">资料版本 <span id="data-version">2026-10-19.1</span><br>覆盖香港部分街区，持续可扩充。</p></aside>
+      </div>
+      <div id="ask-result" class="result-area" aria-live="polite"></div>
+    </section>
+
+    <section id="view-plan" class="view hidden">
+      <div class="section-heading"><div><span class="eyebrow">留点时间给沿途</span><h2>排一段舒服的旅程</h2></div><span class="subtle">1–3 天的行程草案</span></div>
+      <div class="plan-layout">
+        <form id="plan-form" class="panel plan-form">
+          <div class="form-pair"><label>玩几天<select id="days"><option value="1">1 天</option><option value="2" selected>2 天</option><option value="3">3 天</option></select></label><label>去哪里<select id="plan-region"><option>全部</option><option>香港岛</option><option>九龙</option><option>大屿山</option></select></label></div>
+          <label class="label">旅行节奏</label><div class="segmented"><label><input type="radio" name="pace" value="轻松" checked><span>轻松走走</span></label><label><input type="radio" name="pace" value="充实"><span>多逛一点</span></label></div>
+          <fieldset><legend>这趟想体验什么</legend><div id="interest-options" class="interest-options"></div></fieldset>
+          <div class="stack-checks"><label class="check"><input type="checkbox" id="rain">只选有室内参观空间的地点</label><label class="check"><input type="checkbox" id="public-only">景点只选公共空间</label></div>
+          <label class="label" for="must-visit">必去地点 <span class="subtle">最多 3 个</span></label><select id="must-visit" multiple size="4" aria-describedby="must-help"></select><p id="must-help" class="fine-print">在资料卡点击“加入必去”也可以选；电脑上用 ⌘ / Ctrl 多选。</p>
+          <button class="primary full" type="submit" id="plan-submit">生成我的行程 <span>↗</span></button>
+          <p class="fine-print">按街区和偏好安排，不含酒店往返、订票或订位。交通时间为本地估算。</p>
+        </form>
+        <div id="plan-result" aria-live="polite"><div class="plan-placeholder"><div class="large-mark">慢</div><h3>旅程不必塞满。</h3><p>选好天数和偏好，<br>我们把相近的地方放在一起。</p><span>01 选偏好 &nbsp; → &nbsp; 02 排行程 &nbsp; → &nbsp; 03 查来源</span></div></div>
+      </div>
+    </section>
+
+    <section id="view-places" class="view hidden">
+      <div class="section-heading"><div><span class="eyebrow">认识下一站</span><h2>地点资料库</h2></div><span class="subtle">景点与餐饮候选，均附资料来源</span></div>
+      <div class="library-filter"><label class="search-label"><span>⌕</span><input id="place-search" type="search" placeholder="搜索地点、街区或美食" aria-label="搜索地点"></label><select id="library-region" aria-label="按地区筛选"><option>全部</option><option>香港岛</option><option>九龙</option><option>大屿山</option></select><span id="library-count" class="subtle"></span></div>
+      <div id="place-grid" class="cards-grid"></div>
+    </section>
+
+    <section id="view-about" class="view hidden">
+      <div class="section-heading"><div><span class="eyebrow">看见系统如何工作</span><h2>运行状态与能力范围</h2></div></div>
+      <div id="status-grid" class="status-grid"></div>
+      <div class="panel explanation"><h3>一个问题，会经过哪些步骤？</h3><div class="flow"><span>你的问题</span><b>→</b><span>MCP 本地检索工具</span><b>→</b><span>官方资料片段</span><b>→</b><span>回答与出处</span></div><p>本地演示用关键词检索和资料摘录作答。配置模型后，RAG（检索增强生成）会把查到的片段交给大模型组织回答；它仍需要核对来源。</p><p>MCP（模型上下文协议）是应用调用工具的一种标准方式。这里的问答与规划确实通过本机 MCP 子进程通信；高德则使用官方远程 MCP 接口，需你自行配置 Key。</p><p>行程采用“按街区分组、按兴趣选点、再估算转场余量”的规则，不宣称找到最优路线。地图是地点方位示意，实时导航请打开地图服务核实。</p><div class="divider"></div><h3>之后接入真实服务</h3><ol><li>把项目根目录的 <code>.env.example</code> 复制为 <code>.env</code>。</li><li>只在本机填写模型服务与高德 Key，重启应用。不要把密钥发到聊天或上传仓库。</li><li>问答页勾选“使用大模型回答”；地点卡可测试“高德查询”。</li></ol><p class="fine-print">未接通真实服务之前，不能将这个演示描述为已完成真实模型与高德端到端验证。没有密钥也可以演示检索、规划、引用、下载和本地 MCP 调用。</p></div>
+    </section>
+    <footer><span>港慢游 <i>Hong Kong, slowly.</i></span><span>资料有出处，旅程有余地。<a href="/openapi.json" target="_blank" rel="noopener">接口定义 ↗</a></span></footer>
+  </main>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <dialog id="detail-dialog"><button id="close-dialog" class="close-dialog" aria-label="关闭详情">×</button><div id="detail-content"></div></dialog>
+</body>
+</html>
